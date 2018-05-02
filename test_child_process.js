@@ -1,15 +1,9 @@
-'use strict';
-
-console.log('Starting');
-const child_process = require('child_process');
-
-setInterval(() => {
-    console.log('Spawning test.sh');
-    const process = child_process.spawn('./test.sh');
-    process.on('exit', () => {
-        console.log('process exit');
-    });
-    process.stdout.on('data', (data) => {
-    	console.log('Output: ' + data.toString('utf8'));
-    });
-}, 1000);
+const exec = require('child_process').exec;
+const child = exec('./test.sh test child_process',
+    (error, stdout, stderr) => {
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+        if (error !== null) {
+            console.log(`exec error: ${error}`);
+        }
+});
